@@ -1,38 +1,80 @@
-.App {
-  text-align: center;
+.game {
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  margin: 100px auto;
+  row-gap: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.number {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr) 2fr;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.computer .bit {
+  background-color: #ff0000;
+  color: #ffff00;
+  cursor: default;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.player .bit {
+  background-color: #0000ff;
+  color: #ffff00;
+  cursor: pointer;
+}
+
+.bits .bit {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.bit.active span {
+  display: inline-flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  color: #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.bit.active span::before {
+  content: '';
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(315deg, #721c1c, #ff0000);
+  border-radius: 50%;
+  border: 2px solid #000;
+  position: absolute;
+  z-index: -1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bit {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.bit.result {
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: auto;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.buttons button {
+  width: 100px;
+  height: 30px;
 }
