@@ -1,4 +1,4 @@
-function Stats({rounds, lastRound, secondsPerRound}) {
+function CurrentStats({rounds, lastRound, secondsPerRound}) {
     return (
         <div className="stats">
             <div>Rounds: {rounds}</div>
@@ -8,4 +8,4 @@ function Stats({rounds, lastRound, secondsPerRound}) {
     )
 }
 
-export default Stats;
+export default CurrentStats;

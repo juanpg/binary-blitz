@@ -3,7 +3,7 @@ function Difficulty({round, delay}) {
     return (
         <div>
             <div>Difficulty: {currentDifficulty}</div>
-            <div>Computer Delay: {delay.toFixed(3)}s</div>
+            <div>Computer Delay: {(delay / 1000).toFixed(3)}s</div>
         </div>
     )
 }
