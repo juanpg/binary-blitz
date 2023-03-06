@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import InfoBit from "./InfoBit";
 
-function Computer({playing, currentLevel, goalNumber, currentBit}) {
+function Computer({playing, currentRound, goalNumber, currentBit}) {
+    const level = Math.floor((currentRound - 1) / 20);
+    const displaySum = level < 3;
     const [number, setNumber] = useState('00000000');
 
     useEffect(() => {
@@ -15,8 +17,8 @@ function Computer({playing, currentLevel, goalNumber, currentBit}) {
 
     return (
         <div className="number computer">
-            {number.split('').map((bitValue, index) => <InfoBit key={index} bitValue={bitValue} playing={playing} currentLevel={currentLevel} />)}
-            <div className="bit result">{parseInt(number, 2)}</div>
+            {number.split('').map((bitValue, index) => <InfoBit key={index} bitValue={bitValue} playing={playing} currentRound={currentRound} />)}
+            <div className="bit result">{displaySum ? parseInt(number, 2) : ''}</div>
         </div>
     );
 }

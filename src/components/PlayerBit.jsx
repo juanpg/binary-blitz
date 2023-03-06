@@ -1,9 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function PlayerBit({playing, bit, value, onChange}) {
+function PlayerBit({playing, bit, value, level, onChange}) {
+    const [changed, setChanged] = useState(false);
     const onClick = () => {
         if(playing) {
-            onChange(bit);
+            if(level < 4) {
+                onChange(bit);
+            } else {
+                if(!changed) {
+                    setChanged(chg => true);
+                    onChange(bit);
+                }
+            }
         }
     }
 
@@ -12,7 +20,15 @@ function PlayerBit({playing, bit, value, onChange}) {
 
         const onKeyDown = (event) => {
             if(playing && thisLetter === event.key.toLowerCase()) {
-                onChange(bit);
+                if(level < 4) {
+                    onChange(bit);
+                } else {
+                    if(!changed) {
+                        setChanged(chg => true);
+                        onChange(bit);
+                    }
+                }
+                
             }
         }
 
@@ -21,7 +37,7 @@ function PlayerBit({playing, bit, value, onChange}) {
         return () => {
             document.removeEventListener('keydown', onKeyDown);
         }
-    }, [playing, bit, onChange])
+    }, [playing, bit, onChange, changed, level])
     return (
         <div className="bit" onClick={onClick}>
             <span>{value}</span>

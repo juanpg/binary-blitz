@@ -1,4 +1,4 @@
-function InfoBit({playing, currentLevel, bitValue, active}) {
+function InfoBit({playing, currentRound, bitValue, active}) {
     return (
         <div className={`bit ${active ? 'active' : ''}`}>
             <span>{bitValue}</span>

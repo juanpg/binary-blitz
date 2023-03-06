@@ -1,5 +1,11 @@
-function Difficulty({round, delay}) {
-    let currentDifficulty = 'Normal';
+function Difficulty({level, delay}) {
+    const levelDescriptions = ['Normal', 'Vanishing Goal', 'No bit values', 'No red sum', 'No unclicking', 'No blue sum'];
+    let currentDifficulty = null;
+    if(level <= 5) {
+        currentDifficulty = levelDescriptions[level];
+    } else {
+        currentDifficulty = levelDescriptions[levelDescriptions.length - 1];
+    }
     return (
         <div>
             <div>Difficulty: {currentDifficulty}</div>
