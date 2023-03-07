@@ -8,7 +8,13 @@ function OverallStats() {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        
+                        <ul>
+                            <li>Total games played</li>
+
+                            <li>Highest round</li>
+                            <li>Average number of rounds</li>
+                            <li>Time distribution</li>
+                        </ul>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-danger">Reset</button>
