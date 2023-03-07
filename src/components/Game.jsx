@@ -129,17 +129,17 @@ function Game() {
 
 
     return (
-        <div className="game">
+        <main className="game">
             <Computer playing={playing} currentRound={currentRound} goalNumber={goalNumber} currentBit={currentBit} />
             <Bits currentBit={currentBit} currentRound={currentRound} goalNumber={goalNumber} />
             <Player playing={playing} currentRound={currentRound} playerNumber={playerNumber} onBitChange={onPlayerBitChange} />
             <div className='buttons'>
-                <button ref={startButton} onClick={nextRound} disabled={playing}>Start</button>
+                <button type="button" className="btn btn-primary" ref={startButton} onClick={nextRound} disabled={playing}>Start</button>
                 <Difficulty level={currentRound === undefined ? 0 : Math.floor((currentRound - 1) / 20)} delay={delay} />
-                <button ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
+                <button type="button" className="btn btn-primary" ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
             </div>
             <CurrentStats rounds={currentRound} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
-        </div>
+        </main>        
     );
 }
 

@@ -7,7 +7,7 @@ function Bits({currentBit, currentRound, goalNumber}) {
     const displayBits = level < 2;
     return (
         <div className="number bits">
-            {allBits.map((bitValue, index) => <InfoBit key={index} bitValue={displayBits ? bitValue : ''} active={index === currentBit} />)}
+            {allBits.map((bitValue, index) => <InfoBit key={index} bitValue={displayBits ? bitValue : ''} active={index === currentBit} className="" />)}
             <div className="bit result">{displayGoal ? goalNumber : ''}</div>
         </div>
     )

@@ -39,7 +39,7 @@ function PlayerBit({playing, bit, value, level, onChange}) {
         }
     }, [playing, bit, onChange, changed, level])
     return (
-        <div className="bit" onClick={onClick}>
+        <div className="bit rounded-4 bg-primary" onClick={onClick}>
             <span>{value}</span>
         </div>
     );

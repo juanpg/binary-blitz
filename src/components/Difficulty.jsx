@@ -7,7 +7,7 @@ function Difficulty({level, delay}) {
         currentDifficulty = levelDescriptions[levelDescriptions.length - 1];
     }
     return (
-        <div>
+        <div className="d-flex flex-column text-center">
             <div>Difficulty: {currentDifficulty}</div>
             <div>Computer Delay: {(delay / 1000).toFixed(3)}s</div>
         </div>

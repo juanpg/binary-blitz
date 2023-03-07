@@ -17,8 +17,8 @@ function Computer({playing, currentRound, goalNumber, currentBit}) {
 
     return (
         <div className="number computer">
-            {number.split('').map((bitValue, index) => <InfoBit key={index} bitValue={bitValue} playing={playing} currentRound={currentRound} />)}
-            <div className="bit result">{displaySum ? parseInt(number, 2) : ''}</div>
+            {number.split('').map((bitValue, index) => <InfoBit key={index} bitValue={bitValue} playing={playing} currentRound={currentRound} className="bg-danger" />)}
+            <div className="bit result rounded-4 bg-danger">{displaySum ? parseInt(number, 2) : ''}</div>
         </div>
     );
 }

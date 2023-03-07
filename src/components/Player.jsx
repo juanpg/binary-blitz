@@ -16,7 +16,7 @@ function Player({playing, currentRound, playerNumber, onBitChange}) {
                     onChange={onBitChange} 
                 />
             )}
-            <div className="bit result">{displaySum ? playerNumber : ''}</div>
+            <div className="bit result rounded-4 bg-primary">{displaySum ? playerNumber : ''}</div>
         </div>
     );
 }

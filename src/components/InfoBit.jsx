@@ -1,6 +1,6 @@
-function InfoBit({playing, currentRound, bitValue, active}) {
+function InfoBit({playing, currentRound, bitValue, active, className}) {
     return (
-        <div className={`bit ${active ? 'active' : ''}`}>
+        <div className={`bit rounded-4 ${className} ${active ? 'active' : ''}`}>
             <span>{bitValue}</span>
         </div>
     );
