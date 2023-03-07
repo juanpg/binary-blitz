@@ -2,6 +2,8 @@ import './App.css';
 import Game from './components/Game';
 import Header from './components/Header';
 import Nav from './components/Nav';
+import Help from "./components/Help";
+import OverallStats from "./components/OverallStats";
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <Header />
       <Nav />
       <Game />
+      <Help />
+      <OverallStats />
     </div>
   );
 }

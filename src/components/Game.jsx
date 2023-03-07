@@ -19,6 +19,7 @@ function Game() {
     const [roundStartTime, setRoundStartTime] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [lastRoundTime, setLastRoundTime] = useState(null);
+
     const startButton = useRef(null);
     const submitButton = useRef(null);
 
