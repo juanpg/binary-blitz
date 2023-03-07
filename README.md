@@ -1,4 +1,32 @@
-# Getting Started with Create React App
+# Binary Blitz
+
+This is a recreation of an old Windows game called the same, Binary Blitz.  It's a very simple game, with the goal of converting a random integer from 1 to 255 to binary, as many rounds as possible, as fast as possible.
+
+You can use the mouse or the keyboard (keys 'a' through 'f' and 'j' through ';') to toggle the individual bits.
+
+## Goal
+
+The objective of the game is to convert decimal numbers, from 1 to 255, to binary, as fast as possible, as many rounds as possible without mistake.
+
+## Instructions
+
+1. You are blue, the computer is red.
+2. Click the 'Start' button to begin a new game.
+3. A random number from 1 to 255 will be displayed on the right. Use the mouse or the keyboard to toggle the blue zeros and ones, so they display the binary equivalent of the decimal number.
+4. You can use the keyboard keys a, s, d and f to control bits 128, 64, 32 and 16, and keys j, k, l and ; to control bits 8, 4, 2 and 1.
+5. Click the 'Submit' button or press the Spacebar to confirm your choices. This will validate your answer.
+6. Click the 'Start' button once again, or press the Spacebar, to begin a new round.
+7. At rounds 21, 41, 61, 81 and 101 the game increases the level of difficulty as explained below, but the computer delay is reset to 2 seconds.
+
+## Difficulty levels
+
+The game has five difficulty levels, which increase every 20 rounds. At each level, the computer delay is reset to 2s, and a new challenge is introduced:
+
+* At level 21, the number to convert disappears after a few seconds.
+* At level 41, the bit values (128, 64, 32, etc.) disappear.
+* At level 61, the computer number is no longer shown.
+* At level 81, you can't unclick a bit.
+* At level 101, your conversion number is no longer shown.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -28,38 +56,6 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
 ### Deployment
 
