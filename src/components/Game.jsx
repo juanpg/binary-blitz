@@ -9,7 +9,7 @@ function Game() {
     const INITIAL_DELAY = 2000;
     const LEVEL_UP = 20;
     const DELAY_DECREASE = 0.95;
-    const [gameOver, setGameOver] = useState(null);
+    const [gameOver, setGameOver] = useState(true);
     const [delay, setDelay] = useState(null);
     const [playing, setPlaying] = useState(null);
     const [currentRound, setCurrentRound] = useState(0);
@@ -29,8 +29,6 @@ function Game() {
             setCurrentRound(lvl => 1);
             setTotalTime(ttl => 0);
             setLastRoundTime(lrt => 0);
-        } else {
-            setCurrentRound(lvl => lvl + 1);
         }
         setGoalNumber(gl => Math.floor(Math.random() * 255) + 1);
         setPlayerNumber(num => 0);
@@ -48,6 +46,7 @@ function Game() {
         if(playerNumber === goalNumber) {
             setTotalTime(ttl => ttl + roundDuration);
             setLastRoundTime(lrt => roundDuration);
+            setCurrentRound(lvl => lvl + 1);
             // Calculate round time
             // Increase or reset speed
             // setCurrentRound(lvl => lvl + 1);
@@ -139,7 +138,7 @@ function Game() {
                 <Difficulty level={currentRound === undefined ? 0 : Math.floor((currentRound - 1) / 20)} delay={delay} />
                 <button type="button" className="btn btn-primary" ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
             </div>
-            <CurrentStats rounds={currentRound} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
+            <CurrentStats rounds={currentRound-1} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
         </main>        
     );
 }
