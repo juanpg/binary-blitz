@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Help from "./components/Help";
 import OverallStats from "./components/OverallStats";
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Game />
       <Help />
       <OverallStats />
+      <Footer />
     </div>
   );
 }
