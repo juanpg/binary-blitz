@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 function Nav() {
 
-    const storedTheme = localStorage.getItem('theme');
+    const storedTheme = localStorage.getItem('theme') ?? 'auto';
     const [themeTitle, setThemeTitle] = useState(`${storedTheme[0].toUpperCase()}${storedTheme.substring(1)}`);
 
     const getPreferredTheme = useCallback(() => {
