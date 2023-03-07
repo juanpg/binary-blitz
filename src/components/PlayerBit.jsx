@@ -36,10 +36,10 @@ function PlayerBit({playing, bit, value, level, onChange}) {
     }, [playing, bit, triggerChange]);
 
     useEffect(() => {
-        if(level < 4) {
+        if(!playing) {
             setChanged(chg => false);
         }
-    }, [level]);
+    }, [playing]);
 
     return (
         <div className="bit rounded-4 bg-primary text-bg-primary" onClick={onClick}>
