@@ -1,7 +1,7 @@
 function Help() {
   return (
     <div className="modal fade" id="helpDialog" tabIndex="-1" aria-labelledby="helpTitle" aria-hidden="true">
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-lg">
             <div className="modal-content">
                 <div className="modal-header">
                     <h1 className="modal-title fs-5" id="helpTitle">Binary Blitz Help</h1>
