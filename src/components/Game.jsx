@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Computer from "./Computer";
 import Bits from "./Bits";
 import Player from "./Player";
@@ -52,8 +52,10 @@ function Game() {
             // setCurrentRound(lvl => lvl + 1);
         } else {
 
-            alert('You lost');
             setGameOver(go => true);
+            alert('You lost');
+
+            updateOverallStats();
 
             // Update overall stats;
         }
@@ -64,6 +66,38 @@ function Game() {
         setPlayerNumber(num => num ^ mask);
     }
 
+    const updateOverallStats = useCallback(() => {
+        const stats = JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}');
+
+        if(currentRound-1 > stats.statistics.highestRound) {
+            stats.statistics.highestRound = currentRound-1;
+        }
+        stats.statistics.averageRound = (stats.statistics.totalGames * stats.statistics.averageRound + currentRound - 1) / (stats.statistics.totalGames + 1)
+        stats.statistics.totalGames += 1;
+
+        const level = Math.floor((currentRound - 1) / 20);
+        if(stats.distribution[level]) {
+            stats.distribution[level] += 1;
+        } else {
+            stats.distribution[level] = 1;
+        }
+
+        stats.top10 = [...stats.top10]
+            .concat({
+                "date": new Date(), 
+                "rounds": currentRound, 
+                "averageTime": (currentRound > 0 ? totalTime / currentRound / 1000 : 0)
+            }).sort((a, b) => {
+                if(a.rounds !== b.rounds) {
+                    return b.rounds - a.rounds;
+                }
+
+                return a.averageTime - b.averageTime;
+            }).slice(0, 10);
+
+        localStorage.setItem('stats', JSON.stringify(stats));
+    }, [currentRound, totalTime]);
+
     useEffect(() => {
         let intervalId = null;
 
@@ -72,9 +106,11 @@ function Game() {
                 // Lost on time out
                 setPlaying(pl => false);
                 setGameOver(go => true);
+
                 alert('You lost');
 
                 // Update overall stats
+                updateOverallStats();
 
                 return;
             }
@@ -89,7 +125,7 @@ function Game() {
         return () => {
             clearInterval(intervalId);
         };
-    }, [playing, currentBit, currentRound, delay]);
+    }, [playing, currentBit, currentRound, delay, updateOverallStats]);
 
     useEffect(() => {
         const onKeyDown = (event) => {
@@ -138,7 +174,7 @@ function Game() {
                 <Difficulty level={currentRound === undefined ? 0 : Math.floor((currentRound - 1) / 20)} delay={delay} />
                 <button type="button" className="btn btn-primary" ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
             </div>
-            <CurrentStats rounds={currentRound-1} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
+            <CurrentStats rounds={Math.max(0, currentRound-1)} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
         </main>        
     );
 }
