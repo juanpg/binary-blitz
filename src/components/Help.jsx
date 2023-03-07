@@ -15,7 +15,7 @@ function Help() {
                         <ol>
                             <li>You are blue, the computer is red.</li>
                             <li>Click the 'Start' button to begin a new game.</li>
-                            <li>A random number from 1 to 255 will be display on the right. Use the mouse or the keyboard to toggle the blue zeros and ones until they equate the binary equivalent of the decimal number.</li>
+                            <li>A random number from 1 to 255 will be display on the right. Use the mouse or the keyboard to toggle the blue zeros and ones until they display the binary equivalent of the decimal number.</li>
                             <li>You can use the keyboard keys <b>a</b>, <b>s</b>, <b>d</b> and <b>f</b> to control bits 128, 64, 32 and 16, and keys <b>j</b>, <b>k</b>, <b>l</b> and <b>;</b> to control bits 8, 4, 2 and 1.</li>
                             <li>Click the 'Submit' button, or press the Spacebar to confirm your choices and validate your answer.</li>
                             <li>Click the 'Start' button once again, or press the Spacebar, to begin a new round.</li>
