@@ -1,5 +1,9 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 
+.App > div {
+  min-height: 100vh;
+}
+
 .game {
   max-width: 600px;
   display: grid;
@@ -13,15 +17,14 @@
 .number {
   display: grid;
   grid-template-columns: repeat(8, 1fr) 2fr;
+  align-items: center;
 }
 
 .computer .bit {
-  color: var(--bs-emphasis-text);
   cursor: default;
 }
 
 .player .bit {
-  color: var(--bs-emphasis-text);
   cursor: pointer;
 }
 
@@ -51,8 +54,9 @@
 
 .bit {
   display: flex;
-  width: 50px;
-  height: 50px;
+  max-width: 50px;
+  aspect-ratio: 1;
+  /* height: 50px; */
   justify-content: center;
   align-items: center;
   position: relative;

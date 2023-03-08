@@ -3,7 +3,7 @@ import HorizontalBarChart from "./HorizontalBarChart";
 function OverallStats({stats, resetStats}) {
     return (
         <div className="modal fade" id="statsDialog" tabIndex="-1" aria-labelledby="statsTitle" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5" id="statsTitle">Statistics</h1>

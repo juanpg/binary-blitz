@@ -6,6 +6,7 @@ import Difficulty from "./Difficulty";
 import CurrentStats from "./CurrentStats";
 import Help from "./Help";
 import OverallStats from "./OverallStats";
+import GameOverDialog from "./GameOverDialog";
 
 function Game() {
     const INITIAL_DELAY = 2000;
@@ -25,6 +26,7 @@ function Game() {
 
     const startButton = useRef(null);
     const submitButton = useRef(null);
+    const gameOverDialog = useRef(null);
 
     const nextRound = () => {
         if(gameOver) {
@@ -50,17 +52,11 @@ function Game() {
             setTotalTime(ttl => ttl + roundDuration);
             setLastRoundTime(lrt => roundDuration);
             setCurrentRound(lvl => lvl + 1);
-            // Calculate round time
-            // Increase or reset speed
-            // setCurrentRound(lvl => lvl + 1);
         } else {
 
             setGameOver(go => true);
-            alert('You lost');
-
             updateOverallStats();
-
-            // Update overall stats;
+            showGameOverDialog();
         }
     }
 
@@ -68,6 +64,12 @@ function Game() {
         const mask = 1 << bit;
         setPlayerNumber(num => num ^ mask);
     }
+
+    const showGameOverDialog = useCallback(() => {
+        if(gameOverDialog.current) {
+            gameOverDialog.current.click();
+        }
+    }, []);
 
     const updateOverallStats = useCallback(() => {
         const stats = JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}');
@@ -112,11 +114,10 @@ function Game() {
                 setPlaying(pl => false);
                 setGameOver(go => true);
 
-                alert('You lost');
-
                 // Update overall stats
                 updateOverallStats();
 
+                showGameOverDialog();
                 return;
             }
 
@@ -130,11 +131,16 @@ function Game() {
         return () => {
             clearInterval(intervalId);
         };
-    }, [playing, currentBit, currentRound, delay, updateOverallStats]);
+    }, [playing, currentBit, currentRound, delay, updateOverallStats, showGameOverDialog]);
 
     useEffect(() => {
         const onKeyDown = (event) => {
             if(event.keyCode === 32) {
+                if(document.activeElement instanceof HTMLButtonElement) {
+                    if(!(document.activeElement === submitButton.current || document.activeElement === startButton.current)) {
+                        return;
+                    }
+                }
                 event.preventDefault();
                 if(playing) {
                     if(submitButton.current) {
@@ -169,7 +175,6 @@ function Game() {
 
     }, [currentRound]);
 
-
     return (
         <main className="game">
             <Computer playing={playing} currentRound={currentRound} goalNumber={goalNumber} currentBit={currentBit} />
@@ -190,6 +195,7 @@ function Game() {
                     setStats(st => newStats);
                 } 
              } />
+             <GameOverDialog dialogRef={gameOverDialog} />
         </main>
            
     );

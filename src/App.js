@@ -1,16 +1,16 @@
 import './App.css';
 import Game from './components/Game';
-import Header from './components/Header';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App bg-body container vh-100">
-      <Header />
-      <Nav />
-      <Game />
-      <Footer />
+    <div className="App bg-body-tertiary">
+      <div className='bg-body container-md'>
+        <Nav />
+        <Game />
+        <Footer />
+      </div>
     </div>
   );
 }
