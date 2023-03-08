@@ -2,8 +2,6 @@ import './App.css';
 import Game from './components/Game';
 import Header from './components/Header';
 import Nav from './components/Nav';
-import Help from "./components/Help";
-import OverallStats from "./components/OverallStats";
 import Footer from './components/Footer';
 
 function App() {
@@ -12,8 +10,6 @@ function App() {
       <Header />
       <Nav />
       <Game />
-      <Help />
-      <OverallStats />
       <Footer />
     </div>
   );

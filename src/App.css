@@ -80,3 +80,43 @@
 .buttons button {
   width: 100px;
 }
+
+.bar-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bar-label {
+  margin-right: 10px;
+}
+
+.bar {
+  height: 20px;
+  /* background-color: #2196f3; */
+  border-radius: 10px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 85px 1fr 10px;
+  align-items: center;
+}
+
+.bar-value {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.bar-wrapper {
+  height: 100%;
+  padding: 3px 0;
+}
+
+.bar-progress {
+  background-color: var(--bs-primary);
+  height: 100%;
+  position: relative;
+}

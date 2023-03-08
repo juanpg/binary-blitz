@@ -4,6 +4,8 @@ import Bits from "./Bits";
 import Player from "./Player";
 import Difficulty from "./Difficulty";
 import CurrentStats from "./CurrentStats";
+import Help from "./Help";
+import OverallStats from "./OverallStats";
 
 function Game() {
     const INITIAL_DELAY = 2000;
@@ -19,6 +21,7 @@ function Game() {
     const [roundStartTime, setRoundStartTime] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [lastRoundTime, setLastRoundTime] = useState(null);
+    const [stats, setStats] = useState(JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}'));
 
     const startButton = useRef(null);
     const submitButton = useRef(null);
@@ -85,7 +88,7 @@ function Game() {
         stats.top10 = [...stats.top10]
             .concat({
                 "date": new Date(), 
-                "rounds": currentRound, 
+                "rounds": currentRound - 1, 
                 "averageTime": (currentRound > 0 ? totalTime / currentRound / 1000 : 0)
             }).sort((a, b) => {
                 if(a.rounds !== b.rounds) {
@@ -93,9 +96,11 @@ function Game() {
                 }
 
                 return a.averageTime - b.averageTime;
-            }).slice(0, 10);
+            }).slice(0, 5);
 
         localStorage.setItem('stats', JSON.stringify(stats));
+
+        setStats(st => stats);
     }, [currentRound, totalTime]);
 
     useEffect(() => {
@@ -130,6 +135,7 @@ function Game() {
     useEffect(() => {
         const onKeyDown = (event) => {
             if(event.keyCode === 32) {
+                event.preventDefault();
                 if(playing) {
                     if(submitButton.current) {
                         submitButton.current.click();
@@ -175,7 +181,17 @@ function Game() {
                 <button type="button" className="btn btn-primary" ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
             </div>
             <CurrentStats rounds={Math.max(0, currentRound-1)} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
-        </main>        
+            <Help />
+            <OverallStats 
+                stats={stats} 
+                resetStats={() => {
+                    const newStats = {"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []};
+                    localStorage.setItem('stats', JSON.stringify(newStats));
+                    setStats(st => newStats);
+                } 
+             } />
+        </main>
+           
     );
 }
 
