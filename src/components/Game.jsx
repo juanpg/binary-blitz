@@ -13,12 +13,12 @@ function Game() {
     const LEVEL_UP = 20;
     const DELAY_DECREASE = 0.95;
     const [gameOver, setGameOver] = useState(true);
-    const [delay, setDelay] = useState(null);
-    const [playing, setPlaying] = useState(null);
+    const [delay, setDelay] = useState(INITIAL_DELAY);
+    const [playing, setPlaying] = useState(false);
     const [currentRound, setCurrentRound] = useState(0);
     const [goalNumber, setGoalNumber] = useState(0);
     const [playerNumber, setPlayerNumber] = useState(0);
-    const [currentBit, setCurrentBit] = useState(null);
+    const [currentBit, setCurrentBit] = useState(-1);
     const [roundStartTime, setRoundStartTime] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [lastRoundTime, setLastRoundTime] = useState(null);
@@ -38,7 +38,6 @@ function Game() {
         setGoalNumber(gl => Math.floor(Math.random() * 255) + 1);
         setPlayerNumber(num => 0);
         setCurrentBit(bt => 0);
-        // setCurrentRound(lvl => lvl + 1);
         setPlaying(pl => true);
         setRoundStartTime(t => performance.now());
     }
@@ -109,6 +108,7 @@ function Game() {
         let intervalId = null;
 
         const onTimeout = () => {
+            console.log(`timed out at bit`, currentBit);
             if(currentBit >= 7) {
                 // Lost on time out
                 setPlaying(pl => false);
@@ -129,6 +129,7 @@ function Game() {
         }
 
         return () => {
+            console.log(`clearing interval`, intervalId);
             clearInterval(intervalId);
         };
     }, [playing, currentBit, currentRound, delay, updateOverallStats, showGameOverDialog]);
