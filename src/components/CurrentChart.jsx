@@ -58,6 +58,17 @@ function CurrentChart({roundTimes}) {
             context.lineTo(10, canvas.height - 10);
             context.stroke();
 
+            context.setLineDash([3, 6]);
+            context.lineWidth = 1;
+            for (let i = 20; i <= 100; i += 20) {
+                if(roundTimes.length >= i) {
+                    context.beginPath();
+                    context.moveTo(10 + i * xScale, 10);
+                    context.lineTo(10 + i * xScale, canvas.height - 10);
+                    context.stroke();    
+                }
+            }
+
             // Draw the average
             const y = 10 + (maxTime - avgTime) * yScale;
             context.setLineDash([3, 6]);
