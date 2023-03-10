@@ -22,6 +22,7 @@ function Game() {
     const [roundStartTime, setRoundStartTime] = useState(null);
     const [totalTime, setTotalTime] = useState(null);
     const [lastRoundTime, setLastRoundTime] = useState(null);
+    const [roundTimes, setRoundTimes] = useState([]);
     const [stats, setStats] = useState(JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}'));
 
     const startButton = useRef(null);
@@ -34,6 +35,7 @@ function Game() {
             setCurrentRound(lvl => 1);
             setTotalTime(ttl => 0);
             setLastRoundTime(lrt => 0);
+            setRoundTimes(rt => []);
         }
         setGoalNumber(gl => Math.floor(Math.random() * 255) + 1);
         setPlayerNumber(num => 0);
@@ -51,6 +53,7 @@ function Game() {
             setTotalTime(ttl => ttl + roundDuration);
             setLastRoundTime(lrt => roundDuration);
             setCurrentRound(lvl => lvl + 1);
+            setRoundTimes(rt => rt.concat(roundDuration));
         } else {
 
             setGameOver(go => true);
@@ -108,20 +111,22 @@ function Game() {
         let intervalId = null;
 
         const onTimeout = () => {
-            console.log(`timed out at bit`, currentBit);
             if(currentBit >= 7) {
                 // Lost on time out
                 setPlaying(pl => false);
                 setGameOver(go => true);
 
+                setCurrentBit(bt => bt + 1);
+
                 // Update overall stats
                 updateOverallStats();
 
-                showGameOverDialog();
-                return;
-            }
+                clearInterval(intervalId);
 
-            setCurrentBit(bt => bt + 1);
+                showGameOverDialog();
+            } else {
+                setCurrentBit(bt => bt + 1);
+            }            
         }
 
         if(playing) {
@@ -129,7 +134,6 @@ function Game() {
         }
 
         return () => {
-            console.log(`clearing interval`, intervalId);
             clearInterval(intervalId);
         };
     }, [playing, currentBit, currentRound, delay, updateOverallStats, showGameOverDialog]);
@@ -142,6 +146,10 @@ function Game() {
                         return;
                     }
                 }
+                if(document.activeElement.classList.contains('modal')) {
+                    return;
+                }
+                
                 event.preventDefault();
                 if(playing) {
                     if(submitButton.current) {
@@ -186,7 +194,7 @@ function Game() {
                 <Difficulty level={currentRound === undefined ? 0 : Math.floor((currentRound - 1) / 20)} delay={delay} />
                 <button type="button" className="btn btn-primary" ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
             </div>
-            <CurrentStats rounds={Math.max(0, currentRound-1)} lastRound={lastRoundTime / 1000} secondsPerRound={currentRound > 0 ? totalTime / currentRound / 1000 : 0} />
+            <CurrentStats rounds={Math.max(0, currentRound-1)} lastRound={lastRoundTime / 1000} roundTimes={roundTimes} />
             <Help />
             <OverallStats 
                 stats={stats} 
