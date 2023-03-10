@@ -156,6 +156,11 @@ function Game() {
                     return;
                 }
 
+                // If there's a dialog visible, don't start a new game
+                if(document.querySelectorAll(`.modal.show`).length > 0) {
+                    return;
+                }
+
                 // Give the player a chance to actually play
                 if(playing && playerNumber === 0) {
                     return;
