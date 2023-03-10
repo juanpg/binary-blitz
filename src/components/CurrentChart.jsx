@@ -61,6 +61,7 @@ function CurrentChart({roundTimes}) {
                 data: roundTimes.map((_) => avgTime.toFixed(3)),
                 borderColor:  getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-danger'),
                 backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-danger'),
+                pointStyle: false
             }
         ]
     }
