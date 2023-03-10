@@ -1,7 +1,9 @@
 import CurrentChart from "./CurrentChart";
 
-function CurrentStats({rounds, lastRound, roundTimes}) {
+function CurrentStats({roundTimes}) {
     const totalTime = roundTimes.reduce((t, i) => t + i, 0);
+    const rounds = roundTimes.length;
+    const lastRound = rounds > 0 ? roundTimes[rounds - 1] / 1000 : 0;
     const secondsPerRound = rounds > 0 ? totalTime / rounds / 1000 : 0;
     const projectedScore = secondsPerRound > 0 ? Math.floor(Math.log(secondsPerRound/8/2)/Math.log(0.95)+101) : 0;
 

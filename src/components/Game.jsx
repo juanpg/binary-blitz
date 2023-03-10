@@ -15,13 +15,13 @@ function Game() {
     const [gameOver, setGameOver] = useState(true);
     const [delay, setDelay] = useState(INITIAL_DELAY);
     const [playing, setPlaying] = useState(false);
-    const [currentRound, setCurrentRound] = useState(0);
+    // const [currentRound, setCurrentRound] = useState(0);
     const [goalNumber, setGoalNumber] = useState(0);
     const [playerNumber, setPlayerNumber] = useState(0);
     const [currentBit, setCurrentBit] = useState(-1);
     const [roundStartTime, setRoundStartTime] = useState(null);
-    const [totalTime, setTotalTime] = useState(null);
-    const [lastRoundTime, setLastRoundTime] = useState(null);
+    // const [totalTime, setTotalTime] = useState(null);
+    // const [lastRoundTime, setLastRoundTime] = useState(null);
     const [roundTimes, setRoundTimes] = useState([]);
     const [stats, setStats] = useState(JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}'));
 
@@ -32,12 +32,19 @@ function Game() {
     const nextRound = () => {
         if(gameOver) {
             setGameOver(go => false);
-            setCurrentRound(lvl => 1);
-            setTotalTime(ttl => 0);
-            setLastRoundTime(lrt => 0);
+            // setCurrentRound(lvl => 1);
+            // setTotalTime(ttl => 0);
+            // setLastRoundTime(lrt => 0);
             setRoundTimes(rt => []);
         }
-        setGoalNumber(gl => Math.floor(Math.random() * 255) + 1);
+        setGoalNumber(gl => {
+            while(true) {
+                const newGoal = Math.floor(Math.random() * 255) + 1;
+                if(newGoal !== gl) {
+                    return newGoal;
+                }
+            }
+        });
         setPlayerNumber(num => 0);
         setCurrentBit(bt => 0);
         setPlaying(pl => true);
@@ -47,15 +54,14 @@ function Game() {
     const validateAnswer = () => {
         const roundDuration = performance.now() - roundStartTime;
 
-        setPlaying(false);
+        setPlaying(pl => false);
 
         if(playerNumber === goalNumber) {
-            setTotalTime(ttl => ttl + roundDuration);
-            setLastRoundTime(lrt => roundDuration);
-            setCurrentRound(lvl => lvl + 1);
+            // setTotalTime(ttl => ttl + roundDuration);
+            // setLastRoundTime(lrt => roundDuration);
+            // setCurrentRound(lvl => lvl + 1);
             setRoundTimes(rt => rt.concat(roundDuration));
         } else {
-
             setGameOver(go => true);
             updateOverallStats();
             showGameOverDialog();
@@ -76,13 +82,13 @@ function Game() {
     const updateOverallStats = useCallback(() => {
         const stats = JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}');
 
-        if(currentRound-1 > stats.statistics.highestRound) {
-            stats.statistics.highestRound = currentRound-1;
+        if(roundTimes.length > stats.statistics.highestRound) {
+            stats.statistics.highestRound = roundTimes.length;
         }
-        stats.statistics.averageRound = (stats.statistics.totalGames * stats.statistics.averageRound + currentRound - 1) / (stats.statistics.totalGames + 1)
+        stats.statistics.averageRound = (stats.statistics.totalGames * stats.statistics.averageRound + roundTimes.length) / (stats.statistics.totalGames + 1)
         stats.statistics.totalGames += 1;
 
-        const level = Math.floor((currentRound - 1) / 20);
+        const level = Math.floor(roundTimes.length / LEVEL_UP);
         if(stats.distribution[level]) {
             stats.distribution[level] += 1;
         } else {
@@ -92,8 +98,8 @@ function Game() {
         stats.top10 = [...stats.top10]
             .concat({
                 "date": new Date(), 
-                "rounds": currentRound - 1, 
-                "averageTime": (currentRound > 0 ? totalTime / currentRound / 1000 : 0)
+                "rounds": roundTimes.length, 
+                "averageTime": (roundTimes.length > 0 ? roundTimes.reduce((t, i) => t + i, 0) / roundTimes.length / 1000 : 0)
             }).sort((a, b) => {
                 if(a.rounds !== b.rounds) {
                     return b.rounds - a.rounds;
@@ -105,7 +111,7 @@ function Game() {
         localStorage.setItem('stats', JSON.stringify(stats));
 
         setStats(st => stats);
-    }, [currentRound, totalTime]);
+    }, [roundTimes]);
 
     useEffect(() => {
         let intervalId = null;
@@ -136,7 +142,7 @@ function Game() {
         return () => {
             clearInterval(intervalId);
         };
-    }, [playing, currentBit, currentRound, delay, updateOverallStats, showGameOverDialog]);
+    }, [playing, currentBit, delay, updateOverallStats, showGameOverDialog]);
 
     useEffect(() => {
         const onKeyDown = (event) => {
@@ -147,6 +153,11 @@ function Game() {
                     }
                 }
                 if(document.activeElement.classList.contains('modal')) {
+                    return;
+                }
+
+                // Give the player a chance to actually play
+                if(playing && playerNumber === 0) {
                     return;
                 }
                 
@@ -169,32 +180,32 @@ function Game() {
             document.removeEventListener('keydown', onKeyDown);
         }
     
-    }, [playing]);
+    }, [playing, playerNumber]);
 
     useEffect(() => {
         let newDelay = null;
-        if(currentRound > 0) {
-            if(currentRound <= 120) {
-                newDelay = INITIAL_DELAY * (DELAY_DECREASE ** ((currentRound - 1) % LEVEL_UP));
+        // if(roundTimes.length  > 0) {
+            if(roundTimes.length <= 120) {
+                newDelay = INITIAL_DELAY * (DELAY_DECREASE ** (roundTimes.length % LEVEL_UP));
             } else {
-                newDelay = INITIAL_DELAY * (DELAY_DECREASE ** (currentRound - 101));
+                newDelay = INITIAL_DELAY * (DELAY_DECREASE ** (roundTimes.length - 100));
             }
-        }
+        // }
         setDelay(dl => newDelay);
 
-    }, [currentRound]);
+    }, [roundTimes]);
 
     return (
         <main className="game">
-            <Computer playing={playing} currentRound={currentRound} goalNumber={goalNumber} currentBit={currentBit} />
-            <Bits currentBit={currentBit} currentRound={currentRound} goalNumber={goalNumber} />
-            <Player playing={playing} currentRound={currentRound} playerNumber={playerNumber} onBitChange={onPlayerBitChange} />
+            <Computer playing={playing} currentRound={roundTimes.length + 1} goalNumber={goalNumber} currentBit={currentBit} />
+            <Bits playing={playing} currentBit={currentBit} currentRound={roundTimes.length + 1} goalNumber={goalNumber} />
+            <Player playing={playing} currentRound={roundTimes.length + 1} playerNumber={playerNumber} onBitChange={onPlayerBitChange} />
             <div className='buttons'>
                 <button type="button" className="btn btn-primary" ref={startButton} onClick={nextRound} disabled={playing}>Start</button>
-                <Difficulty level={currentRound === undefined ? 0 : Math.floor((currentRound - 1) / 20)} delay={delay} />
+                <Difficulty level={Math.floor(roundTimes.length / LEVEL_UP)} delay={delay} />
                 <button type="button" className="btn btn-primary" ref={submitButton} onClick={validateAnswer} disabled={!playing}>Submit</button>
             </div>
-            <CurrentStats rounds={Math.max(0, currentRound-1)} lastRound={lastRoundTime / 1000} roundTimes={roundTimes} />
+            <CurrentStats roundTimes={roundTimes} />
             <Help />
             <OverallStats 
                 stats={stats} 

@@ -3,7 +3,7 @@ import InfoBit from "./InfoBit";
 
 function Computer({playing, currentRound, goalNumber, currentBit}) {
     const level = Math.floor((currentRound - 1) / 20);
-    const displaySum = level < 3;
+    const displaySum = level < 3 || !playing;
     const [number, setNumber] = useState('00000000');
 
     useEffect(() => {
