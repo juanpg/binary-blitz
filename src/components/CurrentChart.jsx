@@ -23,7 +23,10 @@ const options = {
     responsive: true,
     plugins: {
         legend: {
-            position: 'top'
+            position: 'top',
+            labels: {
+                filter: item => ['Rounds', 'Average'].includes(item.text)
+            }
         }
     },
     scales: {
@@ -55,15 +58,32 @@ function CurrentChart({roundTimes}) {
                 data: roundTimes.map(rt => (rt / 1000).toFixed(3)),
                 borderColor:  getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-primary'),
                 backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-primary'),
+                borderWidth: 2,
+                radius: 2
             },
             {
                 label: 'Average',
                 data: roundTimes.map((_) => avgTime.toFixed(3)),
                 borderColor:  getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-danger'),
                 backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-danger'),
-                pointStyle: false
+                pointStyle: false,
+                borderWidth: 1
             }
         ]
+    }
+
+    const level = Math.floor(roundTimes.length / 20);
+    for(let i = 1; i <= Math.min(5, level); i++) {
+        console.log(i, i * 20, level);
+        const dataset = {
+            label: `Level ${i}`,
+            data: [{x: i*20, y: 0}, {x: i*20, y:6}],
+            borderColor: 'black',
+            backgroundColor: 'black',
+            pointStyle: false,
+            borderWidth: 1
+        };
+        data.datasets.push(dataset);
     }
 
     return (
