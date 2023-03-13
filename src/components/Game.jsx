@@ -7,6 +7,7 @@ import CurrentStats from "./CurrentStats";
 import Help from "./Help";
 import OverallStats from "./OverallStats";
 import GameOverDialog from "./GameOverDialog";
+import Settings from "./Settings";
 
 function Game() {
     const INITIAL_DELAY = 2000;
@@ -23,6 +24,7 @@ function Game() {
     // const [totalTime, setTotalTime] = useState(null);
     // const [lastRoundTime, setLastRoundTime] = useState(null);
     const [roundTimes, setRoundTimes] = useState([]);
+    const [mapping, setMapping] = useState(localStorage.getItem('mapping') ?? 'asdfjkl;');
     const [stats, setStats] = useState(JSON.parse(localStorage.getItem('stats') ?? '{"statistics": {"totalGames": 0, "highestRound": 0, "averageRound": 0}, "distribution": {}, "top10": []}'));
 
     const startButton = useRef(null);
@@ -71,6 +73,11 @@ function Game() {
     const onPlayerBitChange = (bit) => {
         const mask = 1 << bit;
         setPlayerNumber(num => num ^ mask);
+    }
+
+    const onMappingChange  = (newMapping) => {
+        localStorage.setItem('mapping', newMapping);
+        setMapping(mp => newMapping);
     }
 
     const showGameOverDialog = useCallback(() => {
@@ -204,7 +211,7 @@ function Game() {
         <main className="game">
             <Computer playing={playing} currentRound={roundTimes.length + 1} goalNumber={goalNumber} currentBit={currentBit} />
             <Bits playing={playing} currentBit={currentBit} currentRound={roundTimes.length + 1} goalNumber={goalNumber} />
-            <Player playing={playing} currentRound={roundTimes.length + 1} playerNumber={playerNumber} onBitChange={onPlayerBitChange} />
+            <Player playing={playing} currentRound={roundTimes.length + 1} playerNumber={playerNumber} onBitChange={onPlayerBitChange} mapping={mapping} />
             <div className='buttons'>
                 <button type="button" className="btn btn-primary" ref={startButton} onClick={nextRound} disabled={playing}>Start</button>
                 <Difficulty level={Math.floor(roundTimes.length / LEVEL_UP)} delay={delay} />
@@ -220,6 +227,7 @@ function Game() {
                     setStats(st => newStats);
                 } 
              } />
+             <Settings currentSettings={mapping} setCurrentSettings={onMappingChange} />
              <GameOverDialog dialogRef={gameOverDialog} />
         </main>
            

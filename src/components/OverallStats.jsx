@@ -6,7 +6,7 @@ function OverallStats({stats, resetStats}) {
             <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="statsTitle">Statistics</h1>
+                        <h1 className="modal-title fs-5" id="statsTitle">Your Statistics</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">

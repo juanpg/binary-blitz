@@ -127,3 +127,15 @@
   height: 100%;
   position: relative;
 }
+
+.settings {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.settings .key input {
+  max-width: 45px;
+  height: 60px;
+  border-style: dotted;
+}
+

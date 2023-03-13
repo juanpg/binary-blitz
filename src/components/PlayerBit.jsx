@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-function PlayerBit({playing, bit, value, level, onChange}) {
+function PlayerBit({playing, bit, value, level, onChange, mappedKey}) {
     const [changed, setChanged] = useState(false);
 
     const triggerChange = useCallback(() => {
@@ -20,7 +20,8 @@ function PlayerBit({playing, bit, value, level, onChange}) {
     }
 
     useEffect(() => {
-        const thisLetter = [';', 'l', 'k', 'j', 'f', 'd', 's', 'a'][bit];
+        // const thisLetter = [';', 'l', 'k', 'j', 'f', 'd', 's', 'a'][bit];
+        const thisLetter = mappedKey.toLowerCase();
 
         const onKeyDown = (event) => {
             if(playing && thisLetter === event.key.toLowerCase()) {
@@ -33,7 +34,7 @@ function PlayerBit({playing, bit, value, level, onChange}) {
         return () => {
             document.removeEventListener('keydown', onKeyDown);
         }
-    }, [playing, bit, triggerChange]);
+    }, [playing, bit, triggerChange, mappedKey]);
 
     useEffect(() => {
         if(!playing) {

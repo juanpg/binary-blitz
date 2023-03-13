@@ -1,6 +1,6 @@
 import PlayerBit from "./PlayerBit";
 
-function Player({playing, currentRound, playerNumber, onBitChange}) {
+function Player({playing, currentRound, playerNumber, onBitChange, mapping}) {
     const level = Math.floor((currentRound - 1) / 20);
     const displaySum = level < 5;
 
@@ -14,6 +14,7 @@ function Player({playing, currentRound, playerNumber, onBitChange}) {
                     bit={7-bit} 
                     level={level}
                     onChange={onBitChange} 
+                    mappedKey={mapping[bit]}
                 />
             )}
             <div className="bit result rounded-4 bg-primary text-bg-primary">{displaySum ? playerNumber : ''}</div>
