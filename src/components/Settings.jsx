@@ -49,7 +49,6 @@ function Settings({currentSettings, setCurrentSettings}) {
             setValid(vl => true);
         });
         document.querySelector("#settingsDialog").addEventListener('shown.bs.modal', (event) => {
-            console.log('shown');
             setActiveIndex(idx => 0);
             inputRefs.current[0].focus();
         })
