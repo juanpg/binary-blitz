@@ -2,7 +2,7 @@ import PlayerBit from "./PlayerBit";
 
 function Player({playing, currentRound, playerNumber, onBitChange, mapping}) {
     const level = Math.floor((currentRound - 1) / 20);
-    const displaySum = level < 5;
+    const displaySum = level < 5 || !playing;
 
     return (
         <div className="number player">
