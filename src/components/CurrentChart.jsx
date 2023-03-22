@@ -49,7 +49,7 @@ const options = {
 function CurrentChart({roundTimes}) {
     
     const avgTime = roundTimes.length > 0 ? roundTimes.reduce((t, i) => t + i, 0) / roundTimes.length / 1000 : 0;
-    const maxTime = Math.max(...roundTimes);
+    const maxTime = roundTimes.length > 0 ? Math.ceil(Math.max(...roundTimes) / 1000) : 0;
 
     const data = {
         labels: roundTimes.map((_, index) => index + 1),
