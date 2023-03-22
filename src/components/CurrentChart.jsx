@@ -49,6 +49,7 @@ const options = {
 function CurrentChart({roundTimes}) {
     
     const avgTime = roundTimes.length > 0 ? roundTimes.reduce((t, i) => t + i, 0) / roundTimes.length / 1000 : 0;
+    const maxTime = Math.max(...roundTimes);
 
     const data = {
         labels: roundTimes.map((_, index) => index + 1),
@@ -74,10 +75,10 @@ function CurrentChart({roundTimes}) {
 
     const level = Math.floor(roundTimes.length / 20);
     for(let i = 1; i <= Math.min(5, level); i++) {
-        console.log(i, i * 20, level);
+        // console.log(i, i * 20, level);
         const dataset = {
             label: `Level ${i}`,
-            data: [{x: i*20, y: 0}, {x: i*20, y:6}],
+            data: [{x: i*20, y: 0}, {x: i*20, y:Math.max(6, maxTime)}],
             borderColor: 'black',
             backgroundColor: 'black',
             pointStyle: false,
