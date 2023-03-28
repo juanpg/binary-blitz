@@ -1,3 +1,4 @@
+import { Grid, GridItem } from "@chakra-ui/react";
 import InfoBit from "./InfoBit";
 
 function Bits({currentBit, currentRound, goalNumber, playing}) {
@@ -5,12 +6,15 @@ function Bits({currentBit, currentRound, goalNumber, playing}) {
     const level = Math.floor(currentRound / 20);
     const displayGoal = level === 0 || currentBit < 2 || !playing;
     const displayBits = level < 2 || !playing;
+
     return (
-        <div className="number bits">
-            {allBits.map((bitValue, index) => <InfoBit key={index} bitValue={displayBits ? bitValue : ''} active={index === currentBit} className="text-body-emphasis" />)}
-            <div className={`bit result text-body-emphasis ${currentBit === 8 ? 'active' : ''}`}><span>{displayGoal ? goalNumber : ''}</span></div>
-        </div>
-    )
+        <Grid templateColumns='repeat(8,1fr) 1.25fr' className="number bits" w='full'>
+            {allBits.map((bitValue, index) => <InfoBit key={index} bitValue={displayBits ? bitValue : ''} active={index === currentBit} className="" />)}
+            <GridItem ml='2' bg='' color='' borderRadius='' className="bit result">
+                <span>{displayGoal ? goalNumber : ''}</span>
+            </GridItem>
+        </Grid>
+    );
 }
 
 export default Bits;

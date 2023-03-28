@@ -1,8 +1,10 @@
-function InfoBit({playing, currentRound, bitValue, active, className}) {
+import { GridItem } from "@chakra-ui/react";
+
+function InfoBit({bitValue, active, className}) {
     return (
-        <div className={`bit rounded-4 ${className} ${active ? 'active' : ''}`}>
+        <GridItem className={`bit ${className} ${active ? 'active' : ''}`} borderRadius='2xl'>
             <span>{bitValue}</span>
-        </div>
+        </GridItem>
     );
 }
 
