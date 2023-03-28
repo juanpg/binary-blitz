@@ -8,7 +8,7 @@ function Bits({currentBit, currentRound, goalNumber, playing}) {
     const displayBits = level < 2 || !playing;
 
     return (
-        <Grid templateColumns='repeat(8,1fr) 1.25fr' className="number bits" w='full'>
+        <Grid templateColumns='repeat(8,1fr) 1.25fr' className="number bits" w='full' maxH={'50px'}>
             {allBits.map((bitValue, index) => <InfoBit key={index} bitValue={displayBits ? bitValue : ''} active={index === currentBit} className="" />)}
             <GridItem ml='2' bg='' color='' borderRadius='' className="bit result">
                 <span>{displayGoal ? goalNumber : ''}</span>
