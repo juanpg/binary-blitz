@@ -8,7 +8,7 @@ function OverallStats() {
     const { stats, isStatsOpen, closeStats, resetStats } = useContext(AppContext);
 
     return (
-        <Modal isOpen={isStatsOpen} onClose={closeStats} scrollBehavior='inside' size='2xl'>
+        <Modal isOpen={isStatsOpen} onClose={closeStats} scrollBehavior='inside' size={{base: 'xl', md: '2xl'}}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Your Statistics</ModalHeader>

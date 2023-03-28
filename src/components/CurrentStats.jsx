@@ -14,7 +14,7 @@ function CurrentStats({roundTimes}) {
 
     return (
         <>
-            <Grid gridTemplateColumns='repeat(4, 1fr)' textAlign='center' w='full'>
+            <Grid gridTemplateColumns={{base: 'repeat(2, 1fr)', md:'repeat(4, 1fr)'}} textAlign='center' w='full'>
                 <GridItem><Text as={rounds > highestRound ? 'mark' : ''}>Current score: {rounds}</Text></GridItem>
                 <GridItem>Projected score: {projectedScore}</GridItem>
                 <GridItem>Last: {lastRound.toFixed(3)}s</GridItem>

@@ -6,7 +6,7 @@ function PlayerHuman({playing, currentRound, playerNumber, onBitChange, mapping}
     const displaySum = level < 5 || !playing;
 
     return (
-        <Grid templateColumns='repeat(8,1fr) 1.25fr' className="number player" w='full' maxH={'50px'}>
+        <Grid templateColumns={{base: 'repeat(9, 1fr)', md:'repeat(8,1fr) 1.25fr'}} className="number player" w='full' maxH={'50px'}>
             {playerNumber.toString(2).padStart(8, '0').split('').map((bitValue, index) => (
                 <PlayerBit
                     key={index}
