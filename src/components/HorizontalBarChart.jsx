@@ -1,3 +1,4 @@
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
 
 function Bar({count, level, max}) {
@@ -16,16 +17,14 @@ function Bar({count, level, max}) {
   const label = labels[level] ?? '121+';
 
   return (
-    <div className="bar mb-1">
-      <div className="bar-label text-end">{label}</div>
-      <div className="bar-wrapper">
-        <div className="bar-progress" style={{ width: `${barWidth}%` }}>
-          <div className="bar-value">
-            {count}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Grid mb={3} height={5} borderRadius={2.5} position='relative' templateColumns={'85px 1fr 25px'} alignItems='center'>
+      <GridItem>{label}</GridItem>
+      <GridItem className='bar-wrapper' height={'100%'} p='3px 0'>
+        <Box height={'100%'} position='relative' bg='blue.500' width={`${barWidth}%`}>
+          <Box position={'absolute'} top='50%' right={'5px'} transform='translateY(-50%)' fontWeight={'bold'} color='white'>{count}</Box>
+        </Box>
+      </GridItem>
+    </Grid>
   );
 }
 

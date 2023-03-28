@@ -1,3 +1,4 @@
+import { GridItem } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 
 function PlayerBit({playing, bit, value, level, onChange, mappedKey}) {
@@ -43,9 +44,9 @@ function PlayerBit({playing, bit, value, level, onChange, mappedKey}) {
     }, [playing]);
 
     return (
-        <div className="bit rounded-4 bg-primary text-bg-primary" onClick={onClick}>
+        <GridItem bg='blue.500' color='white' borderRadius='xl' className="bit" onClick={onClick} cursor={playing ? 'pointer' : 'default'}>
             <span>{value}</span>
-        </div>
+        </GridItem>
     );
 }
 

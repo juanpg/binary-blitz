@@ -1,31 +1,9 @@
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
-
-.App > div {
-  min-height: 100vh;
-}
-
-.game {
-  max-width: 600px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr) 2fr 1fr;
-  margin: 50px auto 10px;
-  row-gap: 10px;
-  align-items: center;
-}
-
 .number {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr) 2fr;
   align-items: center;
 }
 
 .computer .bit {
   cursor: default;
-}
-
-.player .bit {
-  cursor: pointer;
 }
 
 .bits .bit {
@@ -37,7 +15,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  color: var(--bs-warning);
+  color: var(--chakra-colors-yellow-300);
   z-index: 1;
 }
 
@@ -45,7 +23,7 @@
   content: '';
   width: 40px;
   height: 40px;
-  background: linear-gradient(315deg, #721c1c, #ff0000);
+  background: linear-gradient(315deg, var(--chakra-colors-red-700), var(--chakra-colors-red-400));
   border-radius: 50%;
   border: 1px solid var(--bs-secondary-bg);
   position: absolute;
@@ -56,7 +34,6 @@
   display: flex;
   max-width: 50px;
   aspect-ratio: 1;
-  /* height: 50px; */
   justify-content: center;
   align-items: center;
   position: relative;
@@ -66,66 +43,10 @@
   font-size: 1.2rem;
   font-weight: bold;
   width: auto;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   aspect-ratio: 2;
   min-height: 100%;
   max-width: none;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  justify-items: center;
-  align-items: center;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.buttons button {
-  width: 100px;
-}
-
-.bar-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.bar-label {
-  margin-right: 10px;
-}
-
-.bar {
-  height: 20px;
-  /* background-color: #2196f3; */
-  border-radius: 10px;
-  position: relative;
-  display: grid;
-  grid-template-columns: 85px 1fr 10px;
-  align-items: center;
-}
-
-.bar-value {
-  position: absolute;
-  top: 50%;
-  right: 5px;
-  transform: translateY(-50%);
-  color: #fff;
-  font-size: 0.9rem;
-}
-
-.bar-wrapper {
-  height: 100%;
-  padding: 3px 0;
-}
-
-.bar-progress {
-  background-color: var(--bs-primary);
-  height: 100%;
-  position: relative;
 }
 
 .settings {

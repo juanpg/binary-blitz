@@ -1,70 +1,76 @@
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Heading, Text,Button, Flex, TableContainer, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { AppContext } from '../context/appContext';
 import HorizontalBarChart from "./HorizontalBarChart";
+import SparkLine from './SparkLine';
 
-function OverallStats({stats, resetStats}) {
+function OverallStats() {
+    const { stats, isStatsOpen, closeStats, resetStats } = useContext(AppContext);
+
     return (
-        <div className="modal fade" id="statsDialog" tabIndex="-1" aria-labelledby="statsTitle" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="statsTitle">Your Statistics</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <h5 className="clearfix">
-                            Overall
-                            <button type="button" className="btn btn-danger btn-sm float-end" title="Reset Statistics" onClick={resetStats}>Reset</button>
-                        </h5>
-                        
-                        <div className="d-flex gap-4 justify-content-center mb-3 clear">
-                            <div className="align-items-center d-flex flex-column">
-                                <div className="fs-5 fw-bold text-primary">{stats.statistics.totalGames}</div>
-                                <div>Played</div>
-                            </div>
-                            <div className="align-items-center d-flex flex-column">
-                                <div className="fs-5 fw-bold text-primary">{stats.statistics.highestRound}</div>
-                                <div>Max round</div>
-                            </div>
-                            <div className="align-items-center d-flex flex-column">
-                                <div className="fs-5 fw-bold text-primary">{stats.statistics.averageRound.toFixed(1)}</div>
-                                <div>Avg. round</div>
-                            </div>
-                        </div>
-                        <h5>Games distribution</h5>
-                        <HorizontalBarChart data={stats.distribution} />
-                        <h5>Top 5 games</h5>
-                        <table className="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Rounds</th>
-                                    <th scope="col">Avg. time per round</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+        <Modal isOpen={isStatsOpen} onClose={closeStats} scrollBehavior='inside' size='2xl'>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Your Statistics</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Flex mb={3} justifyContent='space-between'>
+                        <Heading size='md'>Overall</Heading>
+                        <Button size='sm' title='Reset Statistics' colorScheme='red' onClick={resetStats}>Reset</Button>
+                    </Flex>
+                    <Flex mb={3} gap={4} justifyContent='center'>
+                        <Flex flexDir='column' alignItems='center'>
+                            <Text fontSize='lg' fontWeight='bold' color='blue.500'>{stats.statistics.totalGames}</Text>
+                            <Text>Played</Text>
+                        </Flex>
+                        <Flex flexDir='column' alignItems='center'>
+                            <Text fontSize='lg' fontWeight='bold' color='blue.500'>{stats.statistics.highestRound}</Text>
+                            <Text>Max round</Text>
+                        </Flex>
+                        <Flex flexDir='column' alignItems='center'>
+                            <Text fontSize='lg' fontWeight='bold' color='blue.500'>{stats.statistics.averageRound.toFixed(1)}</Text>
+                            <Text>Avg round</Text>
+                        </Flex>
+                    </Flex>
+                    <Heading as='h5' size='md' my={5}>Games distribution</Heading>
+                    <HorizontalBarChart data={stats.distribution} />
+                    <Heading as='h5' size='md' my={5}>Top 5 games</Heading>
+                    <TableContainer mb={3}>
+                        <Table variant='striped' colorScheme={'blackAlpha'} size='sm'>
+                            <Thead>
+                                <Tr>
+                                    <Th scope='col'>#</Th>
+                                    <Th scope='col'>Date</Th>
+                                    <Th scope='col'>Rounds</Th>
+                                    <Th scope='col'>Avg. time<br /> per round</Th>
+                                    <Th scope='col'>Time per round</Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
                                 {
                                     stats.top10.length === 0
-                                    ? <tr className="table-info">
-                                        <th scope="row" colSpan={4}>No Data</th>
-                                      </tr>
+                                    ? <Tr>
+                                        <Th colSpan='5' bg=''>No Data</Th>
+                                    </Tr>
                                     : stats.top10.map((topItem, idx) => {
-                                        return (
-                                            <tr key={idx}>
-                                                <th scope="row">{idx+1}</th>
-                                                <td>{(new Date(topItem.date)).toLocaleString()}</td>
-                                                <td className="text-end">{topItem.rounds}</td>
-                                                <td className="text-end">{topItem.averageTime.toFixed(3)}s</td>
-                                            </tr>
-                                        );
+                                    return (
+                                        <Tr key={idx}>
+                                            <Th scope='row'>{idx + 1}</Th>
+                                            <Td>{(new Date(topItem.date)).toLocaleString()}</Td>
+                                            <Td isNumeric>{topItem.rounds}</Td>
+                                            <Td isNumeric>{topItem.averageTime.toFixed(3)}s</Td>
+                                            <Td><SparkLine roundTimes={topItem.roundTimes ?? []} maxRound={stats.statistics.highestRound} /></Td>
+                                        </Tr>
+                                    );
                                     })
                                 }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
+    );
 }
 
 export default OverallStats;

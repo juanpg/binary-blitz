@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { AppContext } from "../context/appContext";
+import { Grid, GridItem, Text } from "@chakra-ui/react";
 import CurrentChart from "./CurrentChart";
 
 function CurrentStats({roundTimes}) {
+    const { stats } = useContext(AppContext);
+    const { highestRound } = stats.statistics;
     const totalTime = roundTimes.reduce((t, i) => t + i, 0);
     const rounds = roundTimes.length;
     const lastRound = rounds > 0 ? roundTimes[rounds - 1] / 1000 : 0;
@@ -9,15 +14,13 @@ function CurrentStats({roundTimes}) {
 
     return (
         <>
-            <div className="stats text-center">
-                <div>Current score: {rounds}</div>
-                <div>Projected score: {projectedScore}</div>
-                <div>Last: {lastRound.toFixed(3)}s</div>
-                <div>Avg: {secondsPerRound.toFixed(3)}s</div>
-            </div>
-            <div className="chart">
-                <CurrentChart roundTimes={roundTimes} />
-            </div>
+            <Grid gridTemplateColumns='repeat(4, 1fr)' textAlign='center' w='full'>
+                <GridItem><Text as={rounds > highestRound ? 'mark' : ''}>Current score: {rounds}</Text></GridItem>
+                <GridItem>Projected score: {projectedScore}</GridItem>
+                <GridItem>Last: {lastRound.toFixed(3)}s</GridItem>
+                <GridItem>Avg: {secondsPerRound.toFixed(3)}s</GridItem>
+            </Grid>
+            <CurrentChart roundTimes={roundTimes} />
         </>
     )
 }

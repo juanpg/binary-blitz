@@ -1,4 +1,5 @@
 // import { useEffect, useRef } from "react";
+import { Heading, Box } from '@chakra-ui/react';
 import { 
     Chart as ChartJS,
     CategoryScale,
@@ -34,7 +35,7 @@ const options = {
             title: {
                 text: 'Rounds',
                 display: true
-            }
+            },
         },
         y: {
             beginAtZero: true,
@@ -57,16 +58,16 @@ function CurrentChart({roundTimes}) {
             {
                 label: 'Rounds',
                 data: roundTimes.map(rt => (rt / 1000).toFixed(3)),
-                borderColor:  getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-primary'),
-                backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-primary'),
+                borderColor:  getComputedStyle( document.querySelector(":root")).getPropertyValue('--chakra-colors-blue-500'),
+                backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--chakra-colors-blue-500'),
                 borderWidth: 2,
                 radius: 2
             },
             {
                 label: 'Average',
                 data: roundTimes.map((_) => avgTime.toFixed(3)),
-                borderColor:  getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-danger'),
-                backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--bs-danger'),
+                borderColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--chakra-colors-red-500'),
+                backgroundColor: getComputedStyle( document.querySelector(":root")).getPropertyValue('--chakra-colors-red-500'),
                 pointStyle: false,
                 borderWidth: 1
             }
@@ -88,10 +89,10 @@ function CurrentChart({roundTimes}) {
     }
 
     return (
-        <div>
-            <h5>Time per round (s)</h5>
-            <Line options={options} data={data} />
-        </div>
+        <Box w='full'>
+            <Heading as='h5' size='md'>Time per round (s)</Heading>
+            <Line options={options} data={data} title="Time per round" />
+        </Box>
     );
 }
 
