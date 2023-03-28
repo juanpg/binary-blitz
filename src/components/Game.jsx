@@ -161,13 +161,13 @@ function Game() {
             <PlayerHuman playing={playing} currentRound={roundTimes.length + 1} playerNumber={playerNumber} onBitChange={onPlayerBitChange} mapping={keyboardMap} />
             <Grid templateColumns='1fr 2fr 1fr' w='full' justifyItems='center' alignItems='center'>
                 <GridItem>
-                    <Button size='lg' colorScheme='blue' ref={startButton} onClick={nextRound} isDisabled={playing}>Start</Button>
+                    <Button size={{base: 'sm', md: 'lg'}} colorScheme='blue' ref={startButton} onClick={nextRound} isDisabled={playing}>Start</Button>
                 </GridItem>
                 <GridItem>
                     <Difficulty level={Math.floor(roundTimes.length / LEVEL_UP)} delay={delay} />
                 </GridItem>
                 <GridItem>
-                    <Button size='lg' colorScheme='blue' ref={submitButton} onClick={validateAnswer} isDisabled={!playing}>Submit</Button>
+                    <Button size={{base: 'sm', md: 'lg'}} colorScheme='blue' ref={submitButton} onClick={validateAnswer} isDisabled={!playing}>Submit</Button>
                 </GridItem>
             </Grid>
             <CurrentStats roundTimes={roundTimes} />
