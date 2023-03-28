@@ -21,7 +21,7 @@ function Bar({count, level, max}) {
       <GridItem>{label}</GridItem>
       <GridItem className='bar-wrapper' height={'100%'} p='3px 0'>
         <Box height={'100%'} position='relative' bg='blue.500' width={`${barWidth}%`}>
-          <Box position={'absolute'} top='50%' right={'5px'} transform='translateY(-50%)' fontWeight={'bold'} color='white'>{count}</Box>
+          <Box position={'absolute'} top='50%' right={{base: '2px', md: '5px'}} fontSize={{ base: 'xs', md: 'initial' }} transform='translateY(-50%)' fontWeight={'bold'} color='white'>{count}</Box>
         </Box>
       </GridItem>
     </Grid>

@@ -16,7 +16,7 @@ function PlayerComputer({playing, currentRound, goalNumber, currentBit}) {
     }, [playing, currentBit, goalNumber, number]);
 
     return (
-        <Grid templateColumns='repeat(8,1fr) 1.25fr' className="number computer" w='full' maxH={'50px'}>
+        <Grid templateColumns={{base: 'repeat(9, 1fr)', md:'repeat(8,1fr) 1.25fr'}} className="number computer" w='full' maxH={'50px'}>
             {number.split('').map((bitValue, index) => (
                 <GridItem key={index} bg='red.500' color='white' borderRadius='xl' className="bit">
                     <span>{bitValue}</span>
